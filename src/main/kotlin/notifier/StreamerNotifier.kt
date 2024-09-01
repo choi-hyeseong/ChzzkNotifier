@@ -28,9 +28,10 @@ class StreamerNotifier {
         val builder = EmbedBuilder()
         val online = if (streamer.isBroadcasting) "온라인" else "오프라인"
         builder.setAuthor(streamer.name, null, null)
-        builder.setTitle("방송 상태가 변경되었습니다! - $online")
+        builder.setTitle("방송 상태가 변경되었습니다! - $online") //타이틀
         builder.setDescription("")
         builder.setThumbnail(streamer.avatarUrl)
+        builder.addField(MessageEmbed.Field("치지직","[치지직 링크](https://chzzk.naver.com/live/${streamer.chzzkId})", false)) //필드 링크
         return builder.build()
     }
 }
