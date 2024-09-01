@@ -1,11 +1,7 @@
 package org.example.streamer.manager
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.example.streamer.domain.StreamerDisplayInfo
 import org.example.streamer.domain.StreamerInfo
-import org.example.streamer.parser.detail.StreamerDetailParser
 import org.example.streamer.parser.detail.response.StreamerDetail
 
 /**

@@ -10,13 +10,13 @@ import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.interactions.components.buttons.Button
 import org.example.command.AbstractCommand
 import org.example.streamer.domain.StreamerInfo
-import org.example.streamer.parser.search.StreamerSearcher
+import org.example.streamer.manager.ChzzkAPIManager
 
 /**
  * 스트리머 추가 커맨드
  */
 class StreamerAddCommand(
-    private val streamerSearcher: StreamerSearcher,
+    private val chzzkAPIManager: ChzzkAPIManager,
 ) : AbstractCommand() {
 
 
@@ -50,7 +50,7 @@ class StreamerAddCommand(
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            val streamers = streamerSearcher.searchStreamer(name)
+            val streamers = chzzkAPIManager.searchStreamer(name)
             val streamerEmbed : StreamerEmbed = buildEmbed(streamers)
             event.channel.sendMessageEmbeds(streamerEmbed.embed).setComponents(streamerEmbed.buttons).queue()
         }

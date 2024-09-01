@@ -4,8 +4,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import net.dv8tion.jda.api.entities.Message
-import net.dv8tion.jda.api.entities.User
-import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel
 import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction
@@ -13,7 +11,6 @@ import org.example.command.ChzzkCommand
 import org.example.command.add.StreamerAddCommand
 import org.example.command.list.StreamerListCommand
 import org.example.command.remove.StreamerRemoveCommand
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 //치지직 커맨드 테스트

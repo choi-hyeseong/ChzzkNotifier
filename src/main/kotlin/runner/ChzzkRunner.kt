@@ -3,8 +3,8 @@ package org.example.runner
 import kotlinx.coroutines.*
 import org.example.notifier.StreamerNotifier
 import org.example.streamer.domain.StreamerDisplayInfo
+import org.example.streamer.manager.ChzzkAPIManager
 import org.example.streamer.manager.StreamerInfoManager
-import org.example.streamer.parser.detail.StreamerDetailParser
 import org.example.streamer.parser.detail.response.StreamerDetail
 import kotlin.concurrent.thread
 
@@ -13,7 +13,7 @@ import kotlin.concurrent.thread
  */
 class ChzzkRunner(
     var interval: Int,
-    private val streamerDetailParser: StreamerDetailParser,
+    private val chzzkAPIManager: ChzzkAPIManager,
     private val streamerInfoManager: StreamerInfoManager,
     private val notifier : StreamerNotifier
 ) {
@@ -30,8 +30,8 @@ class ChzzkRunner(
                 if (gap >= interval) {
                     //갱신
                     lastSyncTime = System.currentTimeMillis()
-                    val updateTarget = updateInfos(streamerInfoManager.getStreamerInfos()) //업데이트된 대상들
-                    val notifyData = streamerInfoManager.update(updateTarget)
+                    val updateTarget = parseStreamerLiveDetail(streamerInfoManager.getStreamerInfos()) //치지직 api 호출해서 제일 최신 정보 불러오기
+                    val notifyData = streamerInfoManager.update(updateTarget) //업데이트 및 변경된 데이터 확인
                     //notify
                     if (notifyData.isNotEmpty())
                         notifier.notify(notifyData)
@@ -42,10 +42,10 @@ class ChzzkRunner(
         }
     }
 
-    private fun updateInfos(streamerDisplayInfo: List<StreamerDisplayInfo>): List<StreamerDetail> {
+    private fun parseStreamerLiveDetail(streamerDisplayInfo: List<StreamerDisplayInfo>): List<StreamerDetail> {
         return runBlocking {
             withContext(Dispatchers.IO) {
-                streamerDisplayInfo.map { async { streamerDetailParser.parseDetail(it.chzzkId) } }.awaitAll()
+                streamerDisplayInfo.map { async { chzzkAPIManager.searchDetail(it.chzzkId) } }.awaitAll()
             }
         }
     }

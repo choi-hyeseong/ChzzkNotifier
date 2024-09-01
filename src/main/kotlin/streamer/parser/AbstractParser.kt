@@ -2,8 +2,6 @@ package org.example.streamer.parser
 
 import com.google.gson.Gson
 import okhttp3.ResponseBody
-import org.example.streamer.domain.StreamerInfo
-import org.example.streamer.parser.search.response.SearchResponseDTO
 import org.example.web.WebUtil
 import java.io.IOException
 

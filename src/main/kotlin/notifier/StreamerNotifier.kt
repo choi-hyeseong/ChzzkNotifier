@@ -24,7 +24,7 @@ class StreamerNotifier {
         }
     }
 
-    fun buildEmbed(streamer : StreamerInfo) : MessageEmbed{
+    private fun buildEmbed(streamer : StreamerInfo) : MessageEmbed{
         val builder = EmbedBuilder()
         val online = if (streamer.isBroadcasting) "온라인" else "오프라인"
         builder.setAuthor(streamer.name, null, null)

@@ -1,13 +1,9 @@
 package org.example.streamer.parser.search
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import okhttp3.ResponseBody
 import org.example.streamer.domain.StreamerInfo
 import org.example.streamer.parser.AbstractParser
 import org.example.streamer.parser.search.response.SearchResponseDTO
-import org.example.web.WebUtil
-import java.io.IOException
 
 /**
  * 스트리머 검색 API

@@ -3,7 +3,6 @@ package org.example.web
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import okhttp3.ResponseBody
 
 /**
  * 웹 요청 진행하는 유틸

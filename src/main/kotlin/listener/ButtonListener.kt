@@ -7,10 +7,10 @@ import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import org.example.bot.ChzzkBot
 import org.example.streamer.domain.StreamerInfo
+import org.example.streamer.manager.ChzzkAPIManager
 import org.example.streamer.manager.StreamerInfoManager
-import org.example.streamer.parser.detail.StreamerDetailParser
 
-class ButtonListener(private val streamerDetailParser: StreamerDetailParser, private val streamerInfoManager: StreamerInfoManager, val chzzkBot: ChzzkBot) : ListenerAdapter() {
+class ButtonListener(private val chzzkAPIManager: ChzzkAPIManager, private val streamerInfoManager: StreamerInfoManager, val chzzkBot: ChzzkBot) : ListenerAdapter() {
 
     override fun onButtonInteraction(event: ButtonInteractionEvent) {
         super.onButtonInteraction(event)
@@ -18,7 +18,7 @@ class ButtonListener(private val streamerDetailParser: StreamerDetailParser, pri
 
         CoroutineScope(Dispatchers.IO).launch {
             kotlin.runCatching {
-                val result = streamerDetailParser(id)
+                val result = chzzkAPIManager.searchDetail(id)
                 streamerInfoManager.addStreamer(StreamerInfo(result.channelName, result.channelId, result.channelImageUrl, false))
             }.onSuccess {
                 //성공시
