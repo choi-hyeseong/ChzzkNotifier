@@ -14,13 +14,13 @@ class ChzzkBotTest {
     //companion test - null token
     @Test
     fun testCreateBotWithNullToken() {
-        assertThrows<IllegalArgumentException> { ChzzkBot.create(null) }
+        assertThrows<IllegalArgumentException> { ChzzkBot.create(null, 10) }
     }
 
     //empty token
     @Test
     fun testCreateBotWithEmptyToken() {
-        assertThrows<IllegalArgumentException> { ChzzkBot.create("") }
+        assertThrows<IllegalArgumentException> { ChzzkBot.create("", 10) }
     }
 
 
@@ -42,7 +42,7 @@ class ChzzkBotTest {
         every { builder.build() } returns jda
 
         // 생성
-        ChzzkBot.create("asdf")
+        ChzzkBot.create("asdf", 10)
 
         assertEquals(listOf(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.GUILD_MESSAGE_POLLS), intents.captured) //인텐트값 확인
         assertEquals("asdf", token.captured) //토큰값 확인
