@@ -28,7 +28,7 @@ class StreamerSearcher : AbstractParser<List<StreamerInfo>>() {
         }.onFailure {
             throw IllegalStateException("파싱중 오류가 발생했습니다. - ${it.message}")
         }
-        return parseResult.getOrNull() ?: mutableListOf()
+        return parseResult.getOrThrow()
     }
 
     /**
