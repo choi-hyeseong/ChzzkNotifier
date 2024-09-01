@@ -3,6 +3,7 @@ package bot
 import io.mockk.*
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.requests.GatewayIntent
 import org.example.bot.ChzzkBot
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -39,6 +40,7 @@ class ChzzkBotTest {
 
         //결과 반환 필요시 mock 반환
         every { JDABuilder.create(capture(token), capture(intents)) } returns builder
+        every { builder.addEventListeners(anyVararg<ListenerAdapter>()) } returns builder
         every { builder.build() } returns jda
 
         // 생성

@@ -180,14 +180,14 @@ class AbstractCommandTest {
 
 
     // 추상클래스를 구현한 클래스를 이용해 내부 커맨드 호출시 isSuccess true로 변경
-    inner class ImplementCommand(private val command : String) : AbstractCommand(command) {
+    inner class ImplementCommand(private val command : String) : AbstractCommand() {
         override fun onCommand(event: MessageReceivedEvent) {
             isSuccess = true
         }
     }
 
     //arg값이 성공일경우 성공 반환하기
-    inner class ArgumentCommand(val index : Int) : AbstractCommand("/test") {
+    inner class ArgumentCommand(val index : Int) : AbstractCommand() {
         override fun onCommand(event: MessageReceivedEvent) {
             val arg = getArgument(event, index)
             if (arg == null)
@@ -200,7 +200,7 @@ class AbstractCommandTest {
     }
 
     //concat된값이 결과값이랑 같은경우 성공 반환하기
-    inner class ConcatCommand(val index : Int, val match : String) : AbstractCommand("/test") {
+    inner class ConcatCommand(val index : Int, val match : String) : AbstractCommand() {
         override fun onCommand(event: MessageReceivedEvent) {
             val arg = getConcatArgument(event, index)
             if (arg == null)
