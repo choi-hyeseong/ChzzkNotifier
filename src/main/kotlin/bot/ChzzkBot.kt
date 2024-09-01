@@ -49,23 +49,24 @@ class ChzzkBot private constructor(private val token : String) {
          * @param token 봇의 토큰입니다. nullable 하지만, null 입력시 Exception이 발생합니다
          * @throws IllegalArgumentException 토큰이 제공되지 않을경우 발생합니다.
          */
-        fun create(token : String?) : ChzzkBot {
+        fun create(token : String?, interval : Int) : ChzzkBot {
             if (token.isNullOrEmpty())
                 throw IllegalArgumentException("Token cannot be null or empty")
-            return ChzzkBot(token).also { it.init() }
+            return ChzzkBot(token).also { it.init(interval) }
         }
     }
 
     /**
      * 최초 봇 '초기화' 함수. JDA 인스턴스를 초기화합니다.
      */
-    private fun init() {
+    private fun init(interval: Int) {
         // 메시지 가져오는 권한 부여한 JDA 인스턴스 빌더
         val builder = JDABuilder.create(token, listOf(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.GUILD_MESSAGE_POLLS))
+        runner.interval = interval //인터벌 초기화
         runner.start()
-        jda = builder.addEventListeners(ChzzkCommand(addCommand, removeCommand, listCommand), ButtonListener(streamerDetailParser, streamerInfoManager, this)).build().awaitReady().also {
-            updateStatus("치지지직 동작중~")
-        }
+        jda = builder.addEventListeners(ChzzkCommand(addCommand, removeCommand, listCommand), ButtonListener(streamerDetailParser, streamerInfoManager, this)).build()
+        updateStatus("치지지직 동작중~")
+        jda!!.awaitReady()
 
     }
 
