@@ -41,7 +41,7 @@ class ChzzkCommandTest {
         every { message.contentRaw } returns command //arg없이 호출한 커맨드
         every { message.contentStripped } returns command
 
-        every { addCommand.invoke(any()) } returns mockk()
+        every { addCommand.onCommand(any()) } returns mockk()
 
         chzzkCommand.onCommand(event)
         verify(atLeast = 1) { addCommand.invoke(any()) }

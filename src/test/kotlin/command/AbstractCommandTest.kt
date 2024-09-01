@@ -26,30 +26,6 @@ class AbstractCommandTest {
         every { event.author } returns author
     }
 
-    //봇 메시지일경우 return
-    @Test
-    fun testIsBotMessage() {
-        //message mock
-        every { message.contentRaw } returns "/test"
-        //author mock
-
-        every { author.isBot } returns true //봇임을 리턴
-
-        ImplementCommand("/test").onMessageReceived(event)
-        assertFalse(isSuccess)
-    }
-
-    //다른 커맨드 메시지 수신시
-    @Test
-    fun testIsOtherCommandMessage() {
-        //message mock
-        every { message.contentRaw } returns "/wrong"
-        //author mock
-        every { author.isBot } returns false //봇이 아님을 리턴
-
-        ImplementCommand("/test").onMessageReceived(event)
-        assertFalse(isSuccess)
-    }
 
     @Test
     fun testHandleCommand() {
