@@ -19,7 +19,7 @@ class ButtonListener(private val chzzkAPIManager: ChzzkAPIManager, private val s
         CoroutineScope(Dispatchers.IO).launch {
             kotlin.runCatching {
                 val result = chzzkAPIManager.searchDetail(id)
-                streamerInfoManager.addStreamer(StreamerInfo(result.channelName, result.channelId, result.channelImageUrl, false))
+                streamerInfoManager.addStreamer(StreamerInfo(result.channelName, result.channelId, result.channelImageUrl ?: "", false))
             }.onSuccess {
                 //성공시
                 event.channel.sendMessage("해당 스트리머가 추가되었습니다.").queue()
