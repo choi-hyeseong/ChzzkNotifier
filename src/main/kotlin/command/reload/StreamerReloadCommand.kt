@@ -7,7 +7,7 @@ import org.example.command.SubCommand
  * 스트리머 목록 리로드 커맨드
  */
 class StreamerReloadCommand : SubCommand {
-    override fun onCommand(event: MessageReceivedEvent) {
+    override fun invoke(event: MessageReceivedEvent) {
         TODO("Not yet implemented")
     }
 }
