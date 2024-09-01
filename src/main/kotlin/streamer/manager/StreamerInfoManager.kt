@@ -36,6 +36,7 @@ class StreamerInfoManager {
     fun update(details : List<StreamerDetail>) : List<StreamerInfo> {
         val foundDetails = details.map { Pair(it, find(it.channelId)) }.filter { it.second != null } //등록된 스트리머만 반환. Pair로 묶어서 업데이트 전,후로 연계
         val changedDetails = foundDetails.filter { it.first.openLive != it.second!!.isBroadcasting } //위 매칭된 스트리머 객체중 라이브여부가 변동된 객체만 반환
+
         changedDetails.forEach { it.second!!.isBroadcasting = it.first.openLive } //라이브여부 업데이트
         return changedDetails.map { it.second!! }
     }

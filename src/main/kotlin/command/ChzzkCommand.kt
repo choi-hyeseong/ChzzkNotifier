@@ -22,16 +22,24 @@ class ChzzkCommand(
     private val addCommand: StreamerAddCommand,
     private val removeCommand: StreamerRemoveCommand,
     private val listCommand: StreamerListCommand,
-) : AbstractCommand("/치지직") {
+) : AbstractCommand() {
 
     override fun onCommand(event: MessageReceivedEvent) {
+        val message = event.message.contentRaw
+        //bot의 메시지인경우 리턴
+        if (event.author.isBot)
+            return
+        //해당 커맨드가 아닌경우 리턴
+        if (!message.startsWith("/치지직"))
+            return
+
         val command = getArgument(event, 0)
         val arguments : List<String> = getArguments(event)
         val otherArgs : List<String> = arguments.subListOrEmpty(1, arguments.size)
         when (command) {
-            "추가" -> addCommand(event, otherArgs)
-            "삭제" -> removeCommand(event, otherArgs)
-            "목록" -> listCommand(event, otherArgs)
+            "추가" -> addCommand.onCommand(event)
+            "삭제" -> removeCommand.onCommand(event)
+            "목록" -> listCommand.onCommand(event)
             else -> sendUsage(event)
         }
     }
@@ -39,16 +47,6 @@ class ChzzkCommand(
     private fun sendUsage(event: MessageReceivedEvent) {
         event.channel.sendMessage("/치지직 [ 추가 <이름> / 삭제 <번호> / 목록 ]로 사용해주시기 바랍니다.").queue()
     }
-
-}
-
-/**
- * 부가 커맨드 처리를 위한 커맨드 인터페이스. Front-Controller 처리 패턴
- */
-interface SubCommand {
-    // invoke함수를 통해 그냥 바로 호출가능하게 설정. args는 0번부터 바로 처리할 arg
-    // /치지직 추가 asdf 일경우 추가를 담당하는 subcommand라면 args[0]은 asdf
-    operator fun invoke(event: MessageReceivedEvent, args : List<String>)
 
 }
 

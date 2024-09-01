@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.interactions.components.buttons.Button
-import org.example.command.SubCommand
+import org.example.command.AbstractCommand
 import org.example.streamer.domain.StreamerInfo
 import org.example.streamer.parser.search.StreamerSearcher
 
@@ -17,20 +17,8 @@ import org.example.streamer.parser.search.StreamerSearcher
  */
 class StreamerAddCommand(
     private val streamerSearcher: StreamerSearcher,
-) : SubCommand {
-    override fun invoke(event: MessageReceivedEvent, args : List<String>) {
-        // 스트리머 이름이 비어있는경우
-        if (args.isEmpty()) {
-            event.channel.sendMessage("스트리머 이름을 입력해주세요.").queue()
-            return
-        }
+) : AbstractCommand() {
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val streamers = streamerSearcher.searchStreamer(args[0])
-            val streamerEmbed : StreamerEmbed = buildEmbed(streamers)
-            event.channel.sendMessageEmbeds(streamerEmbed.embed).setComponents(streamerEmbed.buttons).queue()
-        }
-    }
 
     // embed 빌드
     private fun buildEmbed(streamers : List<StreamerInfo>) : StreamerEmbed {
@@ -51,5 +39,20 @@ class StreamerAddCommand(
             rows.add(ActionRow.of(buttons))
 
         return StreamerEmbed(builder.build(), rows)
+    }
+
+    override fun onCommand(event: MessageReceivedEvent) {
+        // 스트리머 이름이 비어있는경우
+        val name = getArgument(event, 1)
+        if (name == null) {
+            event.channel.sendMessage("스트리머 이름을 입력해주세요.").queue()
+            return
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val streamers = streamerSearcher.searchStreamer(name)
+            val streamerEmbed : StreamerEmbed = buildEmbed(streamers)
+            event.channel.sendMessageEmbeds(streamerEmbed.embed).setComponents(streamerEmbed.buttons).queue()
+        }
     }
 }
