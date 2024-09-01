@@ -33,8 +33,6 @@ class ChzzkCommand(
             return
 
         val command = getArgument(event, 0)
-        val arguments : List<String> = getArguments(event)
-        val otherArgs : List<String> = arguments.subListOrEmpty(1, arguments.size)
         when (command) {
             "추가" -> addCommand.onCommand(event)
             "삭제" -> removeCommand.onCommand(event)
