@@ -35,7 +35,7 @@ abstract class AbstractCommand(private val command : String) : ListenerAdapter()
     protected fun getConcatArgument(event: MessageReceivedEvent, from: Int): String? {
         val splitArgument = getArguments(event)
         // out of index
-        if (splitArgument.size <= from)
+        if (splitArgument.size <= from || splitArgument[0].isEmpty())
             return null
 
         val builder: StringBuilder = StringBuilder()
