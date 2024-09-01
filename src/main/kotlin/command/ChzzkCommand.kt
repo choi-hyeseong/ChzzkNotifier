@@ -32,7 +32,7 @@ class ChzzkCommand(
             "추가" -> addCommand(event)
             "삭제" -> removeCommand(event)
             "목록" -> listCommand(event)
-            "리로드" -> removeCommand(event)
+            "리로드" -> reloadCommand(event)
             else -> sendUsage(event)
         }
     }
