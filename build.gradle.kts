@@ -1,5 +1,8 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     kotlin("jvm") version "2.0.0"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
 group = "org.example"
@@ -23,4 +26,10 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(17)
+}
+
+tasks.withType<ShadowJar> {
+    manifest {
+        attributes["Main-Class"] = "org.example.ChzzkNotifierKt"
+    }
 }
