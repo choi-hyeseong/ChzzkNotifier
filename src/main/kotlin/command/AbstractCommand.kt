@@ -25,14 +25,14 @@ abstract class AbstractCommand(private val command : String) : ListenerAdapter()
     // arg값 가져오는 함수
     protected fun getArgument(event: MessageReceivedEvent, index: Int): String? {
         val splitArgument = getArguments(event)
-        return if (splitArgument.size <= index) //out of index
+        return if (splitArgument.size <= index || splitArgument[0].isEmpty()) //out of index
             null
         else
             splitArgument[index]
     }
 
     // arg 합쳐서 가져오기
-    protected fun getConcatedArgument(event: MessageReceivedEvent, from: Int): String? {
+    protected fun getConcatArgument(event: MessageReceivedEvent, from: Int): String? {
         val splitArgument = getArguments(event)
         // out of index
         if (splitArgument.size <= from)
