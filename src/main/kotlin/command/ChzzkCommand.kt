@@ -16,7 +16,6 @@ import org.example.command.remove.StreamerRemoveCommand
  * @property addCommand 스트리머를 추가하는 커맨드를 핸들링합니다.
  * @property removeCommand 스트리머를 삭제하는 커맨드를 핸들링합니다.
  * @property listCommand 스트리머 목록을 확인하는 커맨드를 핸들링합니다.
- * @property reloadCommand 봇을 리로드하는 커맨드를 핸들링합니다.
  */
 class ChzzkCommand(
     private val addCommand: StreamerAddCommand,
