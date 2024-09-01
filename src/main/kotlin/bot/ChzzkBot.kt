@@ -32,7 +32,7 @@ class ChzzkBot private constructor(private val token : String) {
 
     //command
     private val addCommand : StreamerAddCommand = StreamerAddCommand(streamerSearcher)
-    private val removeCommand : StreamerRemoveCommand = StreamerRemoveCommand(streamerInfoManager)
+    private val removeCommand : StreamerRemoveCommand = StreamerRemoveCommand(streamerInfoManager, this)
     private val listCommand : StreamerListCommand = StreamerListCommand(streamerInfoManager)
 
     //notifier
