@@ -44,7 +44,7 @@ class ChzzkBotTest {
         // 생성
         ChzzkBot.create("asdf")
 
-        assertEquals(listOf(GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.GUILD_MESSAGE_POLLS), intents.captured) //인텐트값 확인
+        assertEquals(listOf(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.GUILD_MESSAGE_POLLS), intents.captured) //인텐트값 확인
         assertEquals("asdf", token.captured) //토큰값 확인
         assertEquals(ChzzkBot.jda, jda) //전역 jda에 할당이 됐는지 확인
 

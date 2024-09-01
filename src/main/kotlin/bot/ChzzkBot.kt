@@ -55,7 +55,7 @@ class ChzzkBot private constructor(private val token : String) {
      */
     private fun init() {
         // 메시지 가져오는 권한 부여한 JDA 인스턴스 빌더
-        val builder = JDABuilder.create(token, listOf(GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.GUILD_MESSAGE_POLLS))
+        val builder = JDABuilder.create(token, listOf(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.GUILD_MESSAGE_POLLS))
         jda = builder.addEventListeners(ChzzkCommand(addCommand, removeCommand, listCommand, reloadCommand), ButtonListener(streamerDetailParser, streamerInfoManager)).build().awaitReady()
     }
 }
