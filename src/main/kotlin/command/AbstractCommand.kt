@@ -49,7 +49,7 @@ abstract class AbstractCommand(private val command : String) : ListenerAdapter()
     }
 
     // 분리 arg값 가져오기
-    private fun getArguments(event: MessageReceivedEvent): List<String> {
+    fun getArguments(event: MessageReceivedEvent): List<String> {
         var message = event.message.contentStripped //string으로 strip된 메시지
         message = message.replace(command, "").trim() //커맨드 제거
         return message.split(" ").toList()
