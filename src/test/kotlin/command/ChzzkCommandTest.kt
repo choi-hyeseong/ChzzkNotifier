@@ -23,10 +23,9 @@ class ChzzkCommandTest {
     val addCommand : StreamerAddCommand = mockk()
     val removeCommand : StreamerRemoveCommand = mockk()
     val listCommand : StreamerListCommand = mockk()
-    val reloadCommand : StreamerReloadCommand = mockk()
 
     // 객체 초기화
-    val chzzkCommand : ChzzkCommand = ChzzkCommand(addCommand, removeCommand, listCommand, reloadCommand)
+    val chzzkCommand : ChzzkCommand = ChzzkCommand(addCommand, removeCommand, listCommand)
 
     //mock용 이벤트
     val event : MessageReceivedEvent = mockk()
@@ -77,18 +76,6 @@ class ChzzkCommandTest {
         verify(atLeast = 1) { listCommand.invoke(any()) }
     }
 
-    @Test
-    fun testCallReloadCommand() {
-        //addCommand 호출
-        val command = "/치지직 리로드"
-        every { message.contentRaw } returns command //arg없이 호출한 커맨드
-        every { message.contentStripped } returns command
-
-        every { reloadCommand.invoke(any()) } returns mockk()
-
-        chzzkCommand.onCommand(event)
-        verify(atLeast = 1) { reloadCommand.invoke(any()) }
-    }
 
     @Test
     fun testNullArgCommand() {
