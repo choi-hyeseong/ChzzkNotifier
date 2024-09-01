@@ -30,7 +30,7 @@ data class Data(
 data class Channel(
     val channelId: String,
     val channelName: String,
-    val channelImageUrl: String,
+    val channelImageUrl: String?,
     val verifiedMark: Boolean,
     val channelDescription: String,
     val followerCount: Long,

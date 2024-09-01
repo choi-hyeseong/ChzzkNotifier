@@ -18,7 +18,6 @@ class WebUtil {
          * 해당 url로 get요청 수행
          */
         suspend fun parseGET(url : String) : Response {
-            println(url)
             val request : Request = Request.Builder()
                 .url(url)
                 //유저 에이전트 미명시하면 파싱이 안되네..?

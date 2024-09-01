@@ -14,7 +14,7 @@ class StreamerListCommand(private val streamerInfoManager: StreamerInfoManager) 
         val builder = EmbedBuilder()
         builder.setTitle("스트리머 목록")
         streamerInfoManager.getStreamerInfos().forEach {
-            builder.addField(MessageEmbed.Field("${it.index - 1}. ${it.name}", null, false))
+            builder.addField(MessageEmbed.Field("${it.index + 1}. ${it.name}", "", false))
         }
         event.channel.sendMessageEmbeds(builder.build()).queue()
     }

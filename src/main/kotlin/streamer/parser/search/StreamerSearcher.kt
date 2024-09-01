@@ -28,9 +28,9 @@ class StreamerSearcher : AbstractParser<List<StreamerInfo>>() {
     override fun handle(body: ResponseBody): List<StreamerInfo> {
         val parseResult = kotlin.runCatching {
             val responseDTO: SearchResponseDTO = gson.fromJson(body.string(), SearchResponseDTO::class.java)
-            responseDTO.content.data.map { StreamerInfo(it.channel.channelName, it.channel.channelId, it.channel.channelImageUrl, false) }
+            responseDTO.content.data.map { StreamerInfo(it.channel.channelName, it.channel.channelId, it.channel.channelImageUrl ?: "", false) }
         }.onFailure {
-            throw IllegalStateException("파싱중 오류가 발생했습니다.")
+            throw IllegalStateException("파싱중 오류가 발생했습니다. - ${it.message}")
         }
         return parseResult.getOrNull() ?: mutableListOf()
     }

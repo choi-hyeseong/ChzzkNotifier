@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.requests.restaction.MessageCreateAction
 import org.example.command.ChzzkCommand
 import org.example.command.add.StreamerAddCommand
 import org.example.command.list.StreamerListCommand
-import org.example.command.reload.StreamerReloadCommand
 import org.example.command.remove.StreamerRemoveCommand
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

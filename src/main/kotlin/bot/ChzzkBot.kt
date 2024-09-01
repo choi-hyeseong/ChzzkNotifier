@@ -2,13 +2,15 @@ package org.example.bot
 
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.requests.GatewayIntent
 import org.example.command.ChzzkCommand
 import org.example.command.add.StreamerAddCommand
 import org.example.command.list.StreamerListCommand
-import org.example.command.reload.StreamerReloadCommand
 import org.example.command.remove.StreamerRemoveCommand
 import org.example.listener.ButtonListener
+import org.example.notifier.StreamerNotifier
+import org.example.runner.ChzzkRunner
 import org.example.streamer.manager.StreamerInfoManager
 import org.example.streamer.parser.detail.StreamerDetailParser
 import org.example.streamer.parser.search.StreamerSearcher
@@ -32,7 +34,11 @@ class ChzzkBot private constructor(private val token : String) {
     private val addCommand : StreamerAddCommand = StreamerAddCommand(streamerSearcher)
     private val removeCommand : StreamerRemoveCommand = StreamerRemoveCommand(streamerInfoManager)
     private val listCommand : StreamerListCommand = StreamerListCommand(streamerInfoManager)
-    private val reloadCommand : StreamerReloadCommand = StreamerReloadCommand() //미구현
+
+    //notifier
+    private val notifier : StreamerNotifier = StreamerNotifier()
+    //runner
+    private val runner : ChzzkRunner = ChzzkRunner(20, streamerDetailParser, streamerInfoManager, notifier)
 
     companion object {
         // 전역 JDA 인스턴스. nullable 함. create 호출로 새로운 인스턴스 형성시 초기화됨.
@@ -56,6 +62,16 @@ class ChzzkBot private constructor(private val token : String) {
     private fun init() {
         // 메시지 가져오는 권한 부여한 JDA 인스턴스 빌더
         val builder = JDABuilder.create(token, listOf(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.GUILD_MESSAGE_POLLS))
-        jda = builder.addEventListeners(ChzzkCommand(addCommand, removeCommand, listCommand, reloadCommand), ButtonListener(streamerDetailParser, streamerInfoManager)).build().awaitReady()
+        runner.start()
+        jda = builder.addEventListeners(ChzzkCommand(addCommand, removeCommand, listCommand), ButtonListener(streamerDetailParser, streamerInfoManager, this)).build().awaitReady().also {
+            updateStatus("치지지직 동작중~")
+        }
+
+    }
+
+    fun updateStatus(message : String) {
+        jda?.let {
+            it.presence.activity = Activity.customStatus(message)
+        }
     }
 }

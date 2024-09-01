@@ -3,7 +3,6 @@ package org.example.command
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import org.example.command.add.StreamerAddCommand
 import org.example.command.list.StreamerListCommand
-import org.example.command.reload.StreamerReloadCommand
 import org.example.command.remove.StreamerRemoveCommand
 
 /**
@@ -23,7 +22,6 @@ class ChzzkCommand(
     private val addCommand: StreamerAddCommand,
     private val removeCommand: StreamerRemoveCommand,
     private val listCommand: StreamerListCommand,
-    private val reloadCommand: StreamerReloadCommand
 ) : AbstractCommand("/치지직") {
 
     override fun onCommand(event: MessageReceivedEvent) {
@@ -34,13 +32,12 @@ class ChzzkCommand(
             "추가" -> addCommand(event, otherArgs)
             "삭제" -> removeCommand(event, otherArgs)
             "목록" -> listCommand(event, otherArgs)
-            "리로드" -> reloadCommand(event, otherArgs)
             else -> sendUsage(event)
         }
     }
 
     private fun sendUsage(event: MessageReceivedEvent) {
-        event.channel.sendMessage("/치지직 [ 추가 <이름> / 삭제 <번호> / 목록 / 리로드 ]로 사용해주시기 바랍니다.").queue()
+        event.channel.sendMessage("/치지직 [ 추가 <이름> / 삭제 <번호> / 목록 ]로 사용해주시기 바랍니다.").queue()
     }
 
 }
