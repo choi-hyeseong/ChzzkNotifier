@@ -20,10 +20,10 @@ class CacheStreamerManager : StreamerManager{
     }
 
     //해당 인덱스 스트리머 삭제
-    override fun removeStreamerByIndex(streamerIndex: Int) {
+    override fun removeStreamerByIndex(streamerIndex: Int) : StreamerInfo {
         if (streamers.size <= streamerIndex)
             throw IllegalArgumentException("올바른 번호를 입력해주세요.")
-        streamers.removeAt(streamerIndex)
+        return streamers.removeAt(streamerIndex)
     }
 
     /**
