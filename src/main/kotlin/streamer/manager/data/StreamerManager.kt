@@ -16,8 +16,8 @@ interface StreamerManager {
     // 스트리머 추가
     fun addStreamer(streamer: StreamerInfo)
 
-    //해당 인덱스 스트리머 삭제
-    fun removeStreamerByIndex(streamerIndex: Int)
+    //해당 인덱스 스트리머 삭제. 삭제된 객체 반환
+    fun removeStreamerByIndex(streamerIndex: Int) : StreamerInfo
 
     // 등록된 스트리머 갯수
     fun getCount(): Int
