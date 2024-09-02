@@ -3,7 +3,7 @@ package org.example.notifier.embed
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel
 
 /**
- * embed를 보낼 수 있는 클래스가 구현해야할 추상 클래스
+ * embed를 보낼 수 있는 클래스가 구현해야할 인터페이스
  */
 interface EmbedSender<T> {
 
