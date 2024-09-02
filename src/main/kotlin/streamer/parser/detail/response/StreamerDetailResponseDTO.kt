@@ -1,5 +1,7 @@
 package org.example.streamer.parser.detail.response
 
+import org.example.streamer.domain.StreamerInfo
+
 data class StreamerDetailResponseDTO(
     val code: Long,
     val message: String?,
@@ -18,7 +20,9 @@ data class StreamerDetail(
     val subscriptionAvailability: Boolean,
     val subscriptionPaymentAvailability: SubscriptionPaymentAvailability,
     val adMonetizationAvailability: Boolean,
-)
+) {
+    fun toDomain() : StreamerInfo = StreamerInfo(this.channelId, this.channelName, this.channelImageUrl, openLive)
+}
 
 data class SubscriptionPaymentAvailability(
     val iapAvailability: Boolean,

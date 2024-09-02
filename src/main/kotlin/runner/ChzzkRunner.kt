@@ -3,6 +3,7 @@ package org.example.runner
 import kotlinx.coroutines.*
 import org.example.notifier.StreamerNotifier
 import org.example.streamer.domain.StreamerDisplayInfo
+import org.example.streamer.domain.StreamerInfo
 import org.example.streamer.manager.ChzzkAPIManager
 import org.example.streamer.manager.data.CacheStreamerManager
 import org.example.streamer.parser.detail.response.StreamerDetail
@@ -42,10 +43,10 @@ class ChzzkRunner(
         }
     }
 
-    private fun parseStreamerLiveDetail(streamerDisplayInfo: List<StreamerDisplayInfo>): List<StreamerDetail> {
+    private fun parseStreamerLiveDetail(streamerDisplayInfo: List<StreamerDisplayInfo>): List<StreamerInfo> {
         return runBlocking {
             withContext(Dispatchers.IO) {
-                streamerDisplayInfo.map { async { chzzkAPIManager.searchDetail(it.chzzkId) } }.awaitAll()
+                streamerDisplayInfo.map { async { chzzkAPIManager.searchDetail(it.chzzkId).toDomain() } }.awaitAll()
             }
         }
     }

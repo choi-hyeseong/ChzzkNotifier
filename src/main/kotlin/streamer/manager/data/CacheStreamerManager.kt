@@ -29,12 +29,16 @@ class CacheStreamerManager : StreamerManager{
     /**
      * 라이브 정보 업데이트. 만약 변동된 (라이브 여부 변동) 데이터가 있다면 반환
      */
-    fun update(details : List<StreamerDetail>) : List<StreamerInfo> {
-        val foundDetails = details.map { Pair(it, find(it.channelId)) }.filter { it.second != null } //등록된 스트리머만 반환. Pair로 묶어서 업데이트 전,후로 연계
-        val changedDetails = foundDetails.filter { it.first.openLive != it.second!!.isBroadcasting } //위 매칭된 스트리머 객체중 라이브여부가 변동된 객체만 반환
-
-        changedDetails.forEach { it.second!!.isBroadcasting = it.first.openLive } //라이브여부 업데이트
-        return changedDetails.map { it.second!! }
+    override fun update(streamerInfos : List<StreamerInfo>) : List<StreamerInfo> {
+        val result : MutableList<StreamerInfo> = mutableListOf()
+        streamerInfos.forEach { info ->
+            val savedStreamer = find(info.chzzkId) //리스트에 등록된 스트리머일경우 검색
+            if (savedStreamer != null && info.isBroadcasting != savedStreamer.isBroadcasting) { //리스트에 등록되있고, 방송 여부 상태가 서로 다른경우
+                savedStreamer.isBroadcasting = info.isBroadcasting
+                result.add(savedStreamer)
+            }
+        }
+        return result
     }
 
     //이미 스트리머 목록에 추가된경우
@@ -49,6 +53,6 @@ class CacheStreamerManager : StreamerManager{
     override fun getCount(): Int = streamers.size
 
     // 안전하게 객체 정보 반환하기. streamers를 그대로 노출하는건 좋지 않아보임
-    fun getStreamerInfos(): List<StreamerDisplayInfo> = streamers.mapIndexed { index, streamer -> StreamerDisplayInfo(index, streamer.name, streamer.chzzkId) }
+    override fun getStreamerInfos(): List<StreamerDisplayInfo> = streamers.mapIndexed { index, streamer -> StreamerDisplayInfo(index, streamer.name, streamer.chzzkId) }
 
 }
